@@ -1,0 +1,11 @@
+include 'config_base.gin'
+
+make_dag.start_date = %dag_start_date
+
+make_dag.dag_kvargs= {
+    "dag_id": %dag_id,
+    "default_args": %dag_def_args,
+    "schedule_interval": %dag_sched_interval
+}
+
+make_dag.emails_on_success = %email_notification_list_success
