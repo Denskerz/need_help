@@ -1,0 +1,76 @@
+debug = False
+model_id = 27
+dag_id = '027_rtl_deposits'
+
+email_notification_list_failure = [
+    "dveroshevich@sber-bank.by"
+]
+
+email_notification_list_success = [
+    "dveroshevich@sber-bank.by"
+]
+
+dag_start_date ={
+    "year": 2024,
+    "month": 6,
+    "day": 20, 
+}
+
+dag_def_args = {
+    "owner": "BICC",
+    "retries": 2,
+    "retry_delay_min": 2,
+    "depends_on_past": False,
+    "email": %email_notification_list_failure,
+    "email_on_failure": True
+}
+
+dag_sched_interval = "55 23 25,27,29 * *" #Utochnit
+
+user     = 'PROD_MLRTL_USER'
+password = '6zHxHh4v8ydh12g_eD_h'
+host     = '10.244.230.26'
+port     = '1025'
+conn_args = {
+    "user": %user,
+    "password": %password,
+    "host": %host,
+    "port": %port,
+}
+
+days_pred_end = 10 #Utochnit
+
+############## TABLES ###################
+feat_table         = ["D_MLRTL_M0027_FEATURE", "D_MLRTL_M0027_CTGY_1"]
+pred_head_table     = "D_MLRTL_CMN_PRED_HEADER"
+
+pred_table      = "S_MLRTL_CMN_PREDICTION"
+pred_target_table   = "S_MLRTL_CMN_BIN_PREDTARGET"
+monitor_table       = "S_MLRTL_CMN_METRIC"
+
+
+
+############### DEV tables ###############
+dev_schema      = "SBX_RTL"
+dm_schema       = %dev_schema
+stage_schema    = %dev_schema
+error_schema    = "SBX_RTL"
+###########################################
+
+############### PROM tables ###############
+#dm_schema       = "PROD_DM_MLRTL"
+#stage_schema    = "PROD_STAGE_MLRTL"
+###########################################
+
+feat_file       = ["feature.csv","feature_spr.csv"]
+pred_file_name  = "predictions.csv"
+
+
+rep_dt_column_name  = "REPORT_DATE"
+ld_id_column_name   = "LD_ID"
+
+max_date_dif_days = 30 # used to check of data are outdated
+
+max_retry_n = 5  # number of retries used to upload data
+delay_time  = 30  # delay time in seconds before next try to execute action
+
