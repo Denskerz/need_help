@@ -1,0 +1,21 @@
+include 'config_base.gin'
+
+
+main.dag_id         = %dag_id
+main.model_id       = %model_id
+main.pred_file_name = %pred_file_name
+main.feat_file_name = %feat_file
+
+main.conn_args          = %conn_args
+main.stage_schema       = %stage_schema
+main.error_schema       = %error_schema
+main.pred_tbl_name      = %pred_table
+main.dm_schema          = %dm_schema
+
+
+
+download_data.debug = %stage_schema
+download_data.debug_count = 300000
+
+get_teradata_engine_conn.conn_args = %conn_args
+get_teradata_engine_conn.conn_recovery_args = (%max_retry_n, %delay_time)
