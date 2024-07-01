@@ -1,0 +1,18 @@
+include 'config_base.gin'
+#check
+main.dag_id = %dag_id
+main.conn_args = %conn_args
+main.schema = %dm_schema
+main.feat_file = %feat_file
+main.feat_table = %feat_table
+
+main.rep_dt_column_name  = "REPORT_DATE"
+main.max_date_dif_days   = %max_date_dif_days
+
+download_data.debug = %debug
+download_data.debug_count = 300000
+
+
+
+get_teradata_engine_conn.conn_args = %conn_args
+get_teradata_engine_conn.conn_recovery_args = (%max_retry_n, %delay_time)
